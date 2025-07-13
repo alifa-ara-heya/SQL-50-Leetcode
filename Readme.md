@@ -255,3 +255,31 @@ from
 group by 
   project_id;
 ```
+
+[1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest/description/?envType=study-plan-v2&envId=top-sql-50)
+
+```sql
+select 
+  register.contest_id, 
+  round(
+    (
+      count(register.user_id):: numeric / (
+        select 
+          count(*) 
+        from 
+          users
+      ) * 100
+    ), 
+    2
+  ) as percentage 
+from 
+  Register 
+  join Users on Register.user_id = Users.user_id 
+group by 
+  register.contest_id 
+order by 
+  percentage desc, 
+  register.contest_id asc;
+
+
+```
